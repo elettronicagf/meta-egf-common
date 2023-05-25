@@ -37,12 +37,39 @@ egf_setup_patches(){
         if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi
     done
 
+    # Per applicare patc tramite git am (ammend)
+    for i in "${GIT_AM_PATCHES_RELEASE[@]}" ; do 
+        var=($i) ;
+        src=${var[0]}
+        dest=${var[1]} 
+        curr=$(pwd)
+        cd  $SOURCES_BASE/$dest
+        if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi  
+        git am $EGF_RELEASE/$src
+        if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi
+        cd $curr 
+    done
+
     for i in "${PATCH_MAP_PROJECT[@]}" ; do 
         var=($i) ;
         src=${var[0]}
         dest=${var[1]} 
         cp $EGF_BASE/$src $SOURCES_BASE/$dest
         if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi
+    done
+
+        # Per applicare patc tramite git am (ammend)
+    for i in "${GIT_AM_PATCHES_PROJECT[@]}" ; do 
+        var=($i) ;
+        src=${var[0]}
+        dest=${var[1]} 
+        curr=$(pwd)
+        cd  $SOURCES_BASE/$dest
+        if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi  
+        git am $EGF_BASE/$src
+        if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi
+        cd $curr 
+        
     done
 }
 
