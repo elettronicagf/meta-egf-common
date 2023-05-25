@@ -46,7 +46,7 @@ egf_setup_patches(){
         cd  $SOURCES_BASE/$dest
         if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi  
         git am $EGF_RELEASE/$src
-        if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi
+        if [ $? -eq 1 ]; then echo "PATCH sintax error.";  fi
         cd $curr 
     done
 
@@ -64,18 +64,20 @@ egf_setup_patches(){
         src=${var[0]}
         dest=${var[1]} 
         curr=$(pwd)
+	
+        
         cd  $SOURCES_BASE/$dest
         if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi  
         git am $EGF_BASE/$src
-        if [ $? -eq 1 ]; then echo "PATCH sintax error."; exit ; fi
+        if [ $? -eq 1 ]; then echo "PATCH sintax error.";  fi
         cd $curr 
         
     done
 }
 
 egf_setup_links(){
-    chmod +x $EGF_BASE/meta-egf-common/scripts/egf-setup-release.sh
-    chmod +x $EGF_BASE/scripts/egf-conf/setup_build.sh
+    chmod +x $EGF_BASE/meta-egf-common/scripts/egf-setup-release.sh 2> /dev/null  
+    chmod +x $EGF_BASE/scripts/egf-conf/setup_build.sh 2> /dev/null
     #ln -s /home/yocto/yocto-input/sources/meta-egf/scripts/egf-setup-release.sh ../../egf-setup-release.sh 
 
     if [ ! -e $YOCTO_BASE/egf-setup-release.sh ]; then
